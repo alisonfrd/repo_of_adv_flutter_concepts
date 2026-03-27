@@ -8,7 +8,7 @@ import 'package:tdd_arch_reso/features/number_trivia/data/models/number_trivia_m
 
 import 'package:tdd_arch_reso/features/number_trivia/domain/entities/number_trivia.dart';
 
-import '../../../../core/platform/network_info.dart';
+import '../../../../core/network/network_info.dart';
 import '../../domain/repositories/number_trivia_repository.dart';
 
 typedef _ConcreteOrRandomChooser = Future<NumberTriviaModel> Function();
