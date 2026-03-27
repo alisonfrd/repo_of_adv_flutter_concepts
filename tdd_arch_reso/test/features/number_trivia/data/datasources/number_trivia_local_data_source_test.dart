@@ -56,4 +56,25 @@ void main() {
       expect(() => call(), throwsA(TypeMatcher<CacheException>()));
     });
   });
+
+  group('cachedNumberTrivia', () {
+    final tNumberTriviaModel = NumberTriviaModel(
+      number: 1,
+      text: 'test trivia',
+    );
+
+    test('should call SharedPreferences to cache the data', () async {
+      // arrange
+      when(
+        mockSharedPreferences.setString(any, any),
+      ).thenAnswer((_) async => true);
+      // act
+      await datasource.cacheNumberTrivia(tNumberTriviaModel);
+      // assert
+      final expectJsonString = json.encode(tNumberTriviaModel.toJson());
+      verify(
+        mockSharedPreferences.setString(cachedNumberTrivia, expectJsonString),
+      ).called(1);
+    });
+  });
 }
