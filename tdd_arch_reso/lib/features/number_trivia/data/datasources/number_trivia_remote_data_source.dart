@@ -23,26 +23,48 @@ class NumberTriviaRemoteDataSourceImpl implements NumberTriviaRemoteDataSource {
 
   @override
   Future<NumberTriviaModel> getConcreteNumberTrivia(int number) async {
-    final result = await client.get(
-      Uri.parse('http://numbersapi.com/$number'),
-      headers: {'Content-Type': 'application/json'},
-    );
-    if (result.statusCode == 200) {
-      return NumberTriviaModel.fromJson(json.decode(result.body));
-    } else {
+    try {
+      final url = 'https://numbersapi.com/$number?json';
+      final result = await client.get(
+        Uri.parse(url),
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      if (result.statusCode == 200) {
+        try {
+          final model = NumberTriviaModel.fromJson(json.decode(result.body));
+          return model;
+        } catch (e) {
+          throw ServerException();
+        }
+      } else {
+        throw ServerException();
+      }
+    } catch (e) {
       throw ServerException();
     }
   }
 
   @override
   Future<NumberTriviaModel> getRandomNumberTrivia() async {
-    final result = await client.get(
-      Uri.parse('http://numbersapi.com/random'),
-      headers: {'Content-Type': 'application/json'},
-    );
-    if (result.statusCode == 200) {
-      return NumberTriviaModel.fromJson(json.decode(result.body));
-    } else {
+    try {
+      const url = 'https://numbersapi.com/random?json';
+      final result = await client.get(
+        Uri.parse(url),
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      if (result.statusCode == 200) {
+        try {
+          final model = NumberTriviaModel.fromJson(json.decode(result.body));
+          return model;
+        } catch (e) {
+          throw ServerException();
+        }
+      } else {
+        throw ServerException();
+      }
+    } catch (e) {
       throw ServerException();
     }
   }

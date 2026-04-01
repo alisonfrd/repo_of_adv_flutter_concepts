@@ -3,6 +3,7 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tdd_arch_reso/core/network/network_info.dart';
 import 'package:tdd_arch_reso/core/util/input_converter.dart';
+import 'package:tdd_arch_reso/features/number_trivia/data/datasources/number_trivia_local_data_source.dart';
 import 'package:tdd_arch_reso/features/number_trivia/data/datasources/number_trivia_remote_data_source.dart';
 import 'package:tdd_arch_reso/features/number_trivia/data/repositories/number_trivia_repository_impl.dart';
 import 'package:tdd_arch_reso/features/number_trivia/domain/usecases/get_concrete_number_trivia.dart';
@@ -40,6 +41,10 @@ Future<void> init() async {
   // Data sources
   sl.registerLazySingleton<NumberTriviaRemoteDataSource>(
     () => NumberTriviaRemoteDataSourceImpl(client: sl()),
+  );
+
+  sl.registerLazySingleton<NumberTriviaLocalDataSource>(
+    () => NumberTriviaLocalDataSourceImpl(sharedPreferences: sl()),
   );
 
   //! Core

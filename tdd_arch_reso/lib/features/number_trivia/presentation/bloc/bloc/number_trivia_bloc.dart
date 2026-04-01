@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:tdd_arch_reso/core/error/failure.dart';
 import 'package:tdd_arch_reso/core/usecases/usecase.dart';
@@ -41,30 +42,24 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
       );
     });
 
-    on<GetTriviaForConcreteNumber>((event, emit) {
+    on<GetTriviaForConcreteNumber>((event, emit) async {
       emit(Empty());
 
       final inputEither = inputConverter.stringToUnsignedInteger(
         event.numberString,
       );
 
-      inputEither.fold(
-        (l) {
-          emit(Error(message: INVALID_INPUT_FAILURE_MESSAGE));
-        },
-        (r) async {
-          emit(Loading());
-          final result = await getConcreteNumberTrivia(Params(number: r));
-          result.fold(
-            (l) {
-              emit(Error(message: _mapFailureToMessage(l)));
-            },
-            (trivia) {
-              emit(Loaded(trivia: trivia));
-            },
-          );
-        },
-      );
+      // Usar pattern matching para separar lógica síncrona da assíncrona
+      if (inputEither case Right(:final value)) {
+        emit(Loading());
+        final result = await getConcreteNumberTrivia(Params(number: value));
+        result.fold(
+          (l) => emit(Error(message: _mapFailureToMessage(l))),
+          (trivia) => emit(Loaded(trivia: trivia)),
+        );
+      } else {
+        emit(Error(message: INVALID_INPUT_FAILURE_MESSAGE));
+      }
     });
   }
 
