@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:tdd_arch_reso/core/error/failure.dart';
 
 class InputConverter {
-  Either<Failure, int> stringToUnsidnedInteger(String str) {
+  Either<Failure, int> stringToUnsignedInteger(String str) {
     try {
       final integer = int.parse(str);
       if (integer < 0) throw FormatException();

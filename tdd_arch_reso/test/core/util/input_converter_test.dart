@@ -16,7 +16,7 @@ void main() {
         // arrange
         final str = '123';
         // act
-        final result = inputConverter.stringToUnsidnedInteger(str);
+        final result = inputConverter.stringToUnsignedInteger(str);
         // assert
         expect(result, Right(123));
       },
@@ -26,7 +26,7 @@ void main() {
       // arrange
       final str = 'abc';
       // act
-      final result = inputConverter.stringToUnsidnedInteger(str);
+      final result = inputConverter.stringToUnsignedInteger(str);
       // assert
       expect(result, Left(InvalidInputFailure()));
     });
@@ -37,7 +37,7 @@ void main() {
         // arrange
         final str = '-123';
         // act
-        final result = inputConverter.stringToUnsidnedInteger(str);
+        final result = inputConverter.stringToUnsignedInteger(str);
         // assert
         expect(result, Left(InvalidInputFailure()));
       },
