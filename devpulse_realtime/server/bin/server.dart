@@ -1,5 +1,6 @@
-import 'package:server/server.dart' as server;
+import 'package:server/server.dart';
 
-void main(List<String> arguments) {
-  print('Hello world: ${server.calculate()}!');
+Future<void> main() async {
+  final server = RealtimeServer();
+  await server.start();
 }
