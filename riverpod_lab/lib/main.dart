@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_lab/features/profile/presentation/profile_page.dart';
 
+import 'features/counter/presentation/counter_page.dart';
+
 void main() {
   runApp(
     ProviderScope(
@@ -20,7 +22,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(colorScheme: .fromSeed(seedColor: Colors.pink)),
-      home: const ProfilePage(),
+      home: const CounterPage(),
     );
   }
 }
