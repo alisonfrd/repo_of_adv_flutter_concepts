@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_lab/features/profile/presentation/async_profile_page.dart';
 import 'package:riverpod_lab/features/profile/presentation/profile_page.dart';
+import 'package:riverpod_lab/features/todos/presenter/todos_page.dart';
 
 import 'features/counter/presentation/counter_page.dart';
 
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(colorScheme: .fromSeed(seedColor: Colors.pink)),
-      home: const AsyncProfilePage(),
+      home: const TodosPage(),
     );
   }
 }
