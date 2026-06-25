@@ -9,6 +9,7 @@ abstract interface class ChatRepository {
   Stream<ConnectionStatus> watchConnectionStatus();
 
   Future<void> connect({
+    required String serverUrl,
     required String roomId,
     required String userId,
     required String userName,

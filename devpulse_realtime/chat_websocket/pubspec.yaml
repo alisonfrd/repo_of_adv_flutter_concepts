@@ -13,6 +13,7 @@ dependencies:
   web_socket_channel:
   realtime_contracts:
     path: ../packages/realtime_contracts
+  provider: ^6.1.5+1
 
 dev_dependencies:
   flutter_test:
