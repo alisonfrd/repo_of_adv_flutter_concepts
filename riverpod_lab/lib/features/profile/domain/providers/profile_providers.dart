@@ -1,8 +1,19 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_lab/features/profile/data/user_repository.dart';
 import 'package:riverpod_lab/features/profile/domain/user.dart';
 
 final appNameProvider = Provider<String>((ref) {
   return 'RiverPod Lab';
+});
+
+final userRepositoryProvider = Provider<UserRepository>((ref) {
+  return UserRepository();
+});
+
+final asyncCurrentUserProvider = FutureProvider<User>((ref) async {
+  final user = ref.watch(userRepositoryProvider);
+
+  return user.fechMe();
 });
 
 final currentUserProvider = Provider<User>((ref) {
