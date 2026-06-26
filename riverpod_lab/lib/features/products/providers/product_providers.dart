@@ -8,6 +8,7 @@ final productRepositoryProvider = Provider<ProductsRepository>((ref) {
 
 final productsProvider = FutureProvider<List<Product>>((ref) {
   final repository = ref.watch(productRepositoryProvider);
+  print('LOG ==== Buscando Produtos ...');
   return repository.fetchProducts();
 });
 
@@ -20,9 +21,13 @@ final productDetailsProvider = FutureProvider.autoDispose
 
 final productSearchProvider = FutureProvider.autoDispose
     .family<List<Product>, String>((ref, query) {
+      print('LOG ==== Buscando Produtos ==          Data =  ');
       final repository = ref.watch(productRepositoryProvider);
       if (query.trim().isEmpty) {
         return repository.fetchProducts();
       }
-      return repository.searchProducts(query);
+
+      var data = repository.searchProducts(query);
+
+      return data;
     });

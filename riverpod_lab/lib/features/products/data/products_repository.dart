@@ -10,7 +10,7 @@ class ProductsRepository {
     ),
     Product(
       id: 'p2',
-      name: 'Riverpod Pro',
+      name: 'Riverpod Pros',
       description: 'Curso focado em estado, cache e testes.',
       price: 149.90,
     ),

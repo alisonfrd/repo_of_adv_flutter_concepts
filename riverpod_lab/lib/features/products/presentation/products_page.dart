@@ -32,33 +32,34 @@ class ProductsPage extends ConsumerWidget {
               },
             ),
           ),
-          Expanded(
+          RefreshIndicator(
+            onRefresh: () async {
+              print('Entrou na funcao');
+              await ref.refresh(productSearchProvider(query).future);
+            },
             child: switch (productsAsync) {
-              AsyncData(:final value) => RefreshIndicator(
-                onRefresh: () async {
-                  await ref.refresh(productsProvider.future);
-                },
-                child: ListView.builder(
-                  itemCount: value.length,
-                  itemBuilder: (context, index) {
-                    final product = value[index];
+              AsyncData(:final value) => ListView.builder(
+                shrinkWrap: true,
 
-                    return ListTile(
-                      title: Text(product.name),
-                      subtitle: Text('R\$ ${product.price.toStringAsFixed(2)}'),
-                      trailing: const Icon(Icons.chevron_right),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                ProductDetailsPage(productId: product.id),
-                          ),
-                        );
-                      },
-                    );
-                  },
-                ),
+                itemCount: value.length,
+                itemBuilder: (context, index) {
+                  final product = value[index];
+
+                  return ListTile(
+                    title: Text(product.name),
+                    subtitle: Text('R\$ ${product.price.toStringAsFixed(2)}'),
+                    trailing: const Icon(Icons.chevron_right),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              ProductDetailsPage(productId: product.id),
+                        ),
+                      );
+                    },
+                  );
+                },
               ),
               AsyncError(:final error) => Center(child: Text('Erro: $error')),
               _ => const Center(child: CircularProgressIndicator()),
@@ -69,7 +70,7 @@ class ProductsPage extends ConsumerWidget {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.refresh),
         onPressed: () {
-          ref.invalidate(productsProvider);
+          ref.invalidate(productSearchProvider(query));
         },
       ),
     );
