@@ -5,6 +5,7 @@ import 'package:riverpod_lab/features/profile/presentation/profile_page.dart';
 import 'package:riverpod_lab/features/todos/presenter/todos_page.dart';
 
 import 'features/counter/presentation/counter_page.dart';
+import 'features/products/presentation/products_page.dart';
 
 void main() {
   runApp(
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(colorScheme: .fromSeed(seedColor: Colors.pink)),
-      home: const TodosPage(),
+      home: const ProductsPage(),
     );
   }
 }
