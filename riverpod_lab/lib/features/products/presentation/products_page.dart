@@ -34,32 +34,43 @@ class ProductsPage extends ConsumerWidget {
           ),
           Expanded(
             child: switch (productsAsync) {
-              AsyncData(:final value) => ListView.builder(
-                itemCount: value.length,
-                itemBuilder: (context, index) {
-                  final product = value[index];
-
-                  return ListTile(
-                    title: Text(product.name),
-                    subtitle: Text('R\$ ${product.price.toStringAsFixed(2)}'),
-                    trailing: const Icon(Icons.chevron_right),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              ProductDetailsPage(productId: product.id),
-                        ),
-                      );
-                    },
-                  );
+              AsyncData(:final value) => RefreshIndicator(
+                onRefresh: () async {
+                  await ref.refresh(productsProvider.future);
                 },
+                child: ListView.builder(
+                  itemCount: value.length,
+                  itemBuilder: (context, index) {
+                    final product = value[index];
+
+                    return ListTile(
+                      title: Text(product.name),
+                      subtitle: Text('R\$ ${product.price.toStringAsFixed(2)}'),
+                      trailing: const Icon(Icons.chevron_right),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                ProductDetailsPage(productId: product.id),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                ),
               ),
               AsyncError(:final error) => Center(child: Text('Erro: $error')),
               _ => const Center(child: CircularProgressIndicator()),
             },
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.refresh),
+        onPressed: () {
+          ref.invalidate(productsProvider);
+        },
       ),
     );
   }
